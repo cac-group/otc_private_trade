@@ -1,5 +1,5 @@
 {
-  "contract_name": "otc_trade",
+  "contract_name": "otc_private_trade",
   "contract_version": "0.1.0",
   "idl_version": "1.0.0",
   "instantiate": {
@@ -21,6 +21,7 @@
           "open": {
             "type": "object",
             "required": [
+              "forwho",
               "iscw20",
               "priceamount",
               "pricedenom"
@@ -41,6 +42,9 @@
                     "type": "null"
                   }
                 ]
+              },
+              "forwho": {
+                "$ref": "#/definitions/Addr"
               },
               "iscw20": {
                 "type": "string"

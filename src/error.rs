@@ -18,6 +18,9 @@ pub enum ContractError {
     #[error("Contract already closed")]
     ContractClosed,
 
+    #[error("You can't accept this deal, only the private receiver can")]
+    ContractPrivate,
+
     #[error("You can't close the contract. Only {owner} can")]
     NotOwner { owner: String },
 }

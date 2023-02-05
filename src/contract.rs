@@ -62,7 +62,7 @@ pub mod exec {
         error::ContractError,
         state::{
             COMPLETED, IS_OFFER_CW20, IS_PRICE_CW20, OFFER, OPEN, PRICE, RECEIVER,
-            TIME_CREATION,
+            TIME_CREATION, FORWHO,
         },
     };
 
@@ -76,6 +76,7 @@ pub mod exec {
         priceamount: String,
         pricedenom: String,
         iscw20: String,
+        forwho: Addr,
         env: Env,
     ) -> Result<Response, ContractError> {
         if info.funds.is_empty() && amount.is_none() {
@@ -183,6 +184,7 @@ pub mod exec {
         RECEIVER.save(deps.storage, &info.sender)?;
         TIME_CREATION.save(deps.storage, &env.block.time.seconds())?;
         PRICE.save(deps.storage, &coin(priceamount.parse::<u128>().unwrap(), pricedenom))?;
+        FORWHO.save(deps.storage, &forwho)?;
 
         if iscw20 == "1" {
             IS_PRICE_CW20.save(deps.storage, &true)?;
@@ -200,9 +202,14 @@ pub mod exec {
         let offer = OFFER.load(deps.storage)?;
         let is_offer_cw20 = IS_OFFER_CW20.load(deps.storage)?;
         let open = OPEN.load(deps.storage)?;
+        let privatereceiver = FORWHO.load(deps.storage)?;
 
         if !open {
             return Err(ContractError::ContractClosed);
+        }
+
+        if info.sender != privatereceiver {
+            return Err(ContractError::ContractPrivate);
         }
 
         let mut resp = Response::new();

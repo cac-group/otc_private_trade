@@ -1,1 +1,1 @@
-8e5f0a63fd08b64d7172c5b74995f7f373237c212319bdf9a3453abe5dd13cba  otc_trade.wasm
+9f5c54c34a1c6a8aefa9517baa89b7db3119d819e3519cb79d1a2e0693632a0a  otc_private_trade.wasm

@@ -1,5 +1,5 @@
 [package]
-name = "otc_trade"
+name = "otc_private_trade"
 version = "0.1.0"
 edition = "2021"
 

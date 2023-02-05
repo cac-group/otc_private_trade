@@ -9,3 +9,4 @@ pub const OPEN: Item<bool> = Item::new("open");
 pub const COMPLETED: Item<bool> = Item::new("completed");
 pub const RECEIVER: Item<Addr> = Item::new("receiver");
 pub const TIME_CREATION: Item<u64> = Item::new("time_creation");
+pub const FORWHO: Item<Addr> = Item::new("forwho");
