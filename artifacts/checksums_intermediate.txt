@@ -1,1 +1,1 @@
-8fb5caef6ea9d70c4d6aa606f606761a0052a2df1e26e396fbb544d1adda2644  ./target/wasm32-unknown-unknown/release/otc_private_trade.wasm
+0925875d222134385d195bc05f880a2a157c1801945e77a62d0aa3851b0d675e  ./target/wasm32-unknown-unknown/release/otc_private_trade.wasm

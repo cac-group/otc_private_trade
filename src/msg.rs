@@ -19,7 +19,13 @@ pub enum ExecMsg {
         priceamount: String,
         pricedenom: String,
         iscw20: String,
+        exp: String,
         forwho: Addr,
+    },
+    Changeprice {
+        priceamount: String,
+        pricedenom: String,
+        iscw20: String,
     },
     Buy {},
     Close {},

@@ -21,6 +21,7 @@
           "open": {
             "type": "object",
             "required": [
+              "exp",
               "forwho",
               "iscw20",
               "priceamount",
@@ -43,9 +44,41 @@
                   }
                 ]
               },
+              "exp": {
+                "type": "string"
+              },
               "forwho": {
                 "$ref": "#/definitions/Addr"
               },
+              "iscw20": {
+                "type": "string"
+              },
+              "priceamount": {
+                "type": "string"
+              },
+              "pricedenom": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "changeprice"
+        ],
+        "properties": {
+          "changeprice": {
+            "type": "object",
+            "required": [
+              "iscw20",
+              "priceamount",
+              "pricedenom"
+            ],
+            "properties": {
               "iscw20": {
                 "type": "string"
               },

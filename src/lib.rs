@@ -51,9 +51,15 @@ pub fn execute(
             priceamount,
             pricedenom,
             iscw20,
+            exp,
             forwho,
-        } => exec::open(deps, info, amount, cw20contract, priceamount, pricedenom, iscw20, forwho, env),
+        } => exec::open(deps, info, amount, cw20contract, priceamount, pricedenom, iscw20, exp, forwho, env),
         Buy {} => exec::buy(deps, info),
+        Changeprice {
+            priceamount,
+            pricedenom,
+            iscw20,
+        } => exec::change_price(deps, info, priceamount, pricedenom, iscw20),
         Close {} => exec::close(deps, info),
     }
 }

@@ -76,6 +76,7 @@ pub mod exec {
         priceamount: String,
         pricedenom: String,
         iscw20: String,
+        exp: String,
         forwho: Addr,
         env: Env,
     ) -> Result<Response, ContractError> {
@@ -99,8 +100,8 @@ pub mod exec {
         OPEN.save(deps.storage, &true)?;
         let resp;
         if amount.is_none() {
-            let commission1_amount = info.funds[0].amount.u128() * COMMISSION_1 / 100000;
-            let commission2_amount = info.funds[0].amount.u128() * COMMISSION_2 / 100000;
+            let commission1_amount = info.funds[0].amount.u128() * COMMISSION_1 / (exp.parse::<u128>().unwrap() / 100);
+            let commission2_amount = info.funds[0].amount.u128() * COMMISSION_2 / (exp.parse::<u128>().unwrap() / 100);
             let amount_without_commission =
                 info.funds[0].amount.u128() - commission1_amount - commission2_amount;
             OFFER.save(
@@ -195,6 +196,44 @@ pub mod exec {
         Ok(resp)
     }
 
+    pub fn change_price(
+        deps: DepsMut,
+        info: MessageInfo,
+        priceamount: String,
+        pricedenom: String,
+        iscw20: String,
+    ) -> Result<Response, ContractError> {
+        let open = OPEN.load(deps.storage)?;
+
+        if open == false {
+            return Err(ContractError::ContractClosed);
+        }
+
+        let receiver = RECEIVER.load(deps.storage)?;
+
+        if info.sender != receiver {
+            return Err(ContractError::NotOwner {
+                owner: receiver.to_string(),
+            });
+        }
+
+        PRICE.save(
+            deps.storage,
+            &coin(priceamount.parse::<u128>().unwrap(), pricedenom.clone()),
+        )?;
+
+        if iscw20 == "1" {
+            IS_PRICE_CW20.save(deps.storage, &true)?;
+        } else {
+            IS_PRICE_CW20.save(deps.storage, &false)?;
+        }
+
+        Ok(Response::new()
+            .add_attribute("action", "Price Change")
+            .add_attribute("New Price Amount", priceamount)
+            .add_attribute("New Price Denom", pricedenom))
+    }
+    
     pub fn buy(deps: DepsMut, info: MessageInfo) -> Result<Response, ContractError> {
         let price = PRICE.load(deps.storage)?;
         let receiver = RECEIVER.load(deps.storage)?;
