@@ -1,1 +1,1 @@
-#OTC_private_trade
+OTC contract to perform OTC trades with a 0.1% commission /// IBC asset or CW20 token <-> IBC asset or CW20 token TO ONLY 1 ADDRESS/// The seller will offer a token a and give it a price. The buyer (the address specified) can buy for the specified price. The seller can cancel the order as long as it hasn't been bought yet.
